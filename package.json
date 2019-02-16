@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jiapingzeng/codeday-sp19#readme",
   "dependencies": {
-    "ask-sdk-core": "^2.3.0"
+    "ask-sdk-core": "^2.3.0",
+    "ask-sdk-v1adapter": "^2.3.0"
   }
 }
