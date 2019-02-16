@@ -1,3 +1,6 @@
+const https = require('https')
+const port = 3000
+const server = https.createServer(requestHandler)
 const Alexa = require('ask-sdk-core');
 
 const LaunchRequestHandler = {
@@ -14,3 +17,9 @@ const LaunchRequestHandler = {
         .getResponse();
     }
   };
+
+  server.listen(port, (err) => {
+    if (err) {
+      return console.log('Error: ', err)
+    }
+  })
