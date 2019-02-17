@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "alexa-sdk": "^1.0.25",
-    "math-random": "^1.0.4",
     "sync-request": "^6.0.0"
   }
 }
