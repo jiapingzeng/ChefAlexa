@@ -1,4 +1,3 @@
-
 'use strict';
 const Alexa = require('alexa-sdk');
 
@@ -8,11 +7,6 @@ const handlers = {
     this.response.speak(responseText);
     this.response.cardRenderer('Chef Alexa: Welcome!', responseText);
     this.emit(':responseReady')
-  },
-  'GetNewFactIntent': function () {
-    this.response.cardRenderer('SKILL_NAME', 'randomFact');
-    this.response.speak('speechOutput');
-    this.emit(':responseReady');
   },
   'AMAZON.HelpIntent': function () {
     this.response.speak('speechOutput').listen('reprompt');
@@ -26,6 +20,12 @@ const handlers = {
     this.response.speak('STOP_MESSAGE');
     this.emit(':responseReady');
   },
+  'AMAZON.FallbackIntent': function () {
+    const responseText = 'I am sorry but I do not understand what you are trying to say. Can you please rephrase your quary?'
+    this.response.speak(responseText);
+    this.response.cardRenderer("Chef Alexa: I don't unserstand", responseText);
+    this.emit(':responseReady')
+  }
 };
 
 exports.handler = function (event, context, callback) {
