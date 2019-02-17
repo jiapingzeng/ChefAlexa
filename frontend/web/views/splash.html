@@ -109,9 +109,9 @@
     setInterval(
       function () {
         fadeIn()
-        setTimeout(fadeOut, 2500)
+        setTimeout(fadeOut, 2750)
       }
-      , 3000)
+      , 3000);
       setInterval(
         function(){
           fetch('/status').then(e=>e.json()).then(js=>{if(js.hasRecipe) window.location='./recipelist.html'})
