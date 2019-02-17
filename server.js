@@ -12,19 +12,14 @@ app.get('/test', (req, res) => {
 	)
 })
 app.get('/splash', (req, res) => {
-	if (req.secure) {
-		res.json(splash.html)
-	} else {
-		// request was via http, so redirect to https
-		res.redirect('https://' + req.headers.host + req.url);
-	}
+	res.json('splash.html')
 
 })
 let recipes = undefined
 app.get('/status', (req, res) => {
 	res.json({ hasRecipe: recipes != undefined })
 })
-app.get('/tests', (req, res)=>{
+app.get('/tests', (req, res) => {
 	console.log((req.query.ingredients))
 
 })
@@ -35,13 +30,14 @@ app.get('/recipe', (req, res) => {
 	query.searchParams.append('q', (req.query.ingredients).split(' ').join('+'))
 	fetch(query).then(
 		r => r.json()
-	).then(e => { 
-		recipes = e.hits[Math.floor(Math.random() * e.hits.length)].recipe; 
-		console.log(recipes); 
-		res.json(recipes); 
+	).then(e => {
+		recipes = e.hits[Math.floor(Math.random() * e.hits.length)].recipe;
+		console.log(recipes);
+		res.json(recipes);
 	}).catch((err) => {
 		console.log(err);
-		res.status(500).send()})
+		res.status(500).send()
+	})
 })
 app.get('/clear', (req, res) => { recipes = undefined; res.json({ success: true }) })
 app.get('/recipe-list', (req, res) => {
