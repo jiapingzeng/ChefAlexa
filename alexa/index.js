@@ -46,11 +46,27 @@ const HelpIntentHandler = {
   }
 };
 
+
+const FallbackIntentHandler = {
+  canHandle() {
+    return true;
+  },
+  handle(handlerInput, error) {
+    console.log(`Error handled: ${error.message}`);
+
+    return handlerInput.responseBuilder
+      .speak('Fallback')
+      .reprompt('Fallback')
+      .getResponse();
+  },
+};
+
 const CancelAndStopIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent'
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NavigateHomeIntent');
   },
   handle(handlerInput) {
     const speechText = 'Hope you enjoyed you meal and if you did not I am always here.';
@@ -96,6 +112,7 @@ exports.handler = async function (event, context) {
         LaunchRequestHandler,
         HelloIntentHandler,
         HelpIntentHandler,
+        FallbackIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
       )
@@ -115,6 +132,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     HelloIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
+    FallbackIntentHandler,
     SessionEndedRequestHandler)
   .addErrorHandlers(ErrorHandler)
   .lambda();
