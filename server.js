@@ -15,6 +15,14 @@ app.get('/test', (req, res) => {
 app.get('/idk', (req, res) => {
 	res.json(example.hits)
 })
+let recipes = undefined
+app.get('status', (req, res)=>{
+	res.json({hasRecipe: recipes != undefined})
+})
+// gets and caches a recipe from 
+app.get('/recipe', (req, res)=>{
+
+})
 app.get('/recipe-list', (req, res) => {
 	console.log(JSON.parse(req.query.ingredients))
 	let query = new URL('https://api.edamam.com/search?app_id=a593916b&app_key=5e107e6eccb15211d97ac9cc54c287de')
