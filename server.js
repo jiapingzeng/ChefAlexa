@@ -13,7 +13,7 @@ app.get('/test', (req, res) => {
 })
 app.get('/splash', (req, res) => {
 	if (req.secure) {
-		res.send(splash.html)
+		res.send('./frontend/web/views/splash.html')
 	} else {
 		// request was via http, so redirect to https
 		res.redirect('https://' + req.headers.host + req.url);
@@ -45,7 +45,8 @@ app.get('/recipe', (req, res) => {
 })
 app.get('/clear', (req, res) => { recipes = undefined; res.json({ success: true }) })
 app.get('/recipe-list', (req, res) => {
-	res.json(recipes)
+	console.log(recipes)
+	res.send(recipes)
 })
 app.listen(process.env.PORT || 3000, function () {
 	console.log(`Now listening on ${process.env.PORT || 3000}`)

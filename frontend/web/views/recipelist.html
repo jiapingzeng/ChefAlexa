@@ -1,43 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <title>Recipe List</title>
     <link href="./styles.css" rel="stylesheet">
-  </head>
-  <body style = text-align:center>
-    <div>
-    <h1>
-        Recipes You Can Make
-    </h1>
-    <div id = 'list' style="list-style-type:none;"></div>
-    <script>
-        var hits;
-        fetch('http://localhost:3000/idk')
-        .then(
-            function(a){
-                return a.json()
-            }
-        ).then(
-            function(data){
-                hits = data
-                var str = ' ';
-                hits.forEach(function(list) {
-                str += `<li><a href= ${list.recipe.url} onClick = post(e)>${list.recipe.label}
-                    <img src=${list.recipe.image} height = 10% width = 10%> </a></li>`;
-                }); 
-                document.getElementById('list').innerHTML = str;
-                function post(e){
-                    fetch('/clear')
-                }
-            }
-        ).catch(
-            function(error){
-                console.log(error)
-        });
+    <style>
+      #bg {
+      width: 100%;
+      z-index: -1;
+      height: 100%;
+      background-image: url("./img/splashbg.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      filter: brightness(0.2);
+      position: absolute;
+      line-height: 1.1rem
+    }
+    #yes, #no {
+        margin: 1rem;
+        padding: 1rem;
+        background: rgba(255,255,255,0.5);
+        border-radius: 8px;
+        box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.6);
+        cursor: pointer;
+    }
+    #yes:hover, #no:hover {
+        background: rgba(255,255,255,0.8);
 
-        
-    </script>
+    }
+    </style>
+</head>
+
+<body style=text-align:center>
+        <div id="bg">
+
+            </div>
+    <div style="padding: 1rem; max-width: 666px; margin: 0 auto; height: 100%">
+        <div style="font-family: 'Libre Baskerville', serif; opacity: 0.8">
+            View recipe
+        </div>
+        <h1 style="font-size: 2rem; line-height: 3rem">
+            Recipe not found :(
+        </h1>
     </div>
-  </body>
+
+        <div style="position: relative; bottom: 12rem; width: 100%; margin: 0 auto; max-width: 800px; left: 0; right: 0">
+            <div id="yes" onclick="yes()">Yes</div>
+            <div id="no" onclick="no()">No</div>
+        </div>
+        <script>
+            let link = ''
+            function clear(){
+                return fetch('/clear')
+            }
+            function yes(){
+                if(link)
+                    window.location.href = link
+                clear()
+            }
+            function no(){
+                clear().then(function(){
+                    window.location.href = './splash.html'
+                })
+            }
+            fetch('./recipe-list')
+            .then(e=>e.text())
+            .then(a=>{
+                console.log(a)
+                a = JSON.parse(a)
+                document.querySelector('#bg').style.backgroundImage = `url(${a.image})`
+                document.querySelector('h1').innerHTML = a.label
+                link = a.url
+            })
+
+
+        </script>
+</body>
+
 </html>
