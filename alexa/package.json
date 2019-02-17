@@ -1,23 +1,8 @@
 {
-  "name": "codeday-sp19",
+  "name": "alexa-skill-kit-sdk-factskill",
   "version": "1.0.0",
-  "description": "prob will change the name later",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src -d dist",
-    "start": "node dist/server.js"
-  },
+  "private": true,
   "dependencies": {
-    "ask-sdk-core": "^2.3.0",
-    "ask-sdk-model": "^1.11.2"
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "babel-cli": "^6.26.0",
-    "babel-core": "~7.0.0-beta.3",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "nodemon": "^1.18.10"
+    "alexa-sdk": "^1.0.25"
   }
 }
