@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Libre+Baskerville|Raleway");
+* {
+    transition: 0.25s all;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.1rem
+}
+h1 {
+    font-family: 'Libre Baskerville', serif
+}
+a {
+    color: inherit;
+    text-decoration: inherit;
+    font-size: inherit;
+}
