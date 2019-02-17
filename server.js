@@ -12,8 +12,14 @@ app.get('/test', (req, res) => {
 	res.json({ hello: 'world' }
 	)
 })
-app.get('/idk', (req, res) => {
-	res.json(example.hits)
+app.get('/splash', (req, res) => {
+	if (req.secure) {
+		res.json(splash.html)
+	} else {
+		// request was via http, so redirect to https
+		res.redirect('https://' + req.headers.host + req.url);
+	}
+
 })
 let recipes = undefined
 app.get('status', (req, res)=>{
