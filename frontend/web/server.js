@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const fetch = require("node-fetch")
 const fs = require('fs')
+const path = require('path')
+const example = require('./example.json')
 var URL = require('url').URL
 app.use(express.json())
 app.use(express.static('./views'))
@@ -9,6 +11,9 @@ app.use(express.static('./views'))
 app.get('/test', (req, res) => {
 	res.json({ hello: 'world' }
 	)
+})
+app.get('/idk', (req, res)=>{
+	res.json(example.hits)
 })
 app.get('/recipe-list', (req, res) => {
 	console.log(JSON.parse (req.query.ingredients))
