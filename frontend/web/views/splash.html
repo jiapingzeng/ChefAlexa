@@ -122,6 +122,11 @@
         setTimeout(fadeOut, 2500)
       }
       , 3000)
+      setInterval(
+        function(){
+          fetch('/status').then(e=>e.json()).then(js=>{if(js.hasRecipe) window.location='./recipelist.html'})
+        }
+      , 500)
   </script>
 </body>
 
