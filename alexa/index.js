@@ -54,7 +54,7 @@ const handlers = {
     this.emit(':responseReady')
   },
   'easterEggIntent': function () {
-    this.response.speak("RUN <audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_02'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/>")
+    this.response.speak("RUN <break time = '1s'><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_02'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/>")
     this.emit(':responseReady')
   },
   'RecipeIntent': function () {
