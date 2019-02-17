@@ -23,7 +23,7 @@ var getRecipe = (keywords) => {
 var getIngredients = (r) => {
   var ingredients = ""
   for (i = 0; i < 5 && i < r.ingredientLines.length; i++) {
-    ingredients += r.ingredientLines[i] + ", "
+    ingredients += r.ingredientLines[i].text + ", "
   }
   return ingredients
 }
@@ -65,8 +65,8 @@ const handlers = {
   'RecipeIntent': function () {
     var FoodA = this.event.request.intent.slots.foodA.value;
     const recipe = getRecipe(FoodA)[0].recipe
-    //const ingredients = getIngredients(recipe)
-    this.response.speak(`Would you like to try ${recipe.label}?`)
+    var ingredients = recipe.ingredientLines
+    this.response.speak(`Would you like to try ${recipe.label}? It requires ${ingredients}`)
     this.response.cardRenderer(`Chef Alexa: ${recipe.label}` , `Would you like to try ${recipe.label}?`);
 
     this.emit(':responseReady')
