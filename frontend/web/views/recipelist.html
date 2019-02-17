@@ -109,8 +109,7 @@
                 a = JSON.parse(a)
                 document.querySelector('#bg').style.backgroundImage = `url(${a.image})`
                 if (a.label) {
-                    a.label = titleCase(a.label)
-                    a.label = a.label.split(' recipes')[0]
+                    a.label = a.label.split(' recipes')[0].split(' Recipes')[0]
                     document.querySelector('h1').innerHTML = a.label
                     document.title = a.label
                 }
