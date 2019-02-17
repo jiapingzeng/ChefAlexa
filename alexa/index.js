@@ -25,7 +25,7 @@ const handlers = {
     this.emit(':responseReady')
   },
   'AMAZON.FallbackIntent': function () {
-    const responseText = 'I am sorry, but I do not understand what you are trying to say. Can you please rephrase your quary?'
+    const responseText = 'I am sorry, but I do not understand what you are trying to say. Can you please rephrase your query?'
     this.response.speak(responseText);
     this.response.cardRenderer("Chef Alexa: I don't understand", responseText);
     this.emit(':responseReady')
