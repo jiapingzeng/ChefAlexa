@@ -40,7 +40,7 @@ const handlers = {
     const recipe = getRecipe(FoodA)
     var ingredients = recipe.ingredientLines[0] + ', ' + recipe.ingredientLines[1]
     this.response.speak(`Would you like to try ${recipe.label}? It requires ${ingredients} and more. For more information on this recipe and others checkout the Chef Alexa webapp on your phone.`)
-    this.response.cardRenderer(`Chef Alexa: ${recipe.label}`, `${recipe.label}?`);
+    this.response.cardRenderer(`Chef Alexa: ${recipe.label}`, `${recipe.label}`);
 
     this.emit(':responseReady')
   },
