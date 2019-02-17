@@ -5,27 +5,27 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Hello, I am Chef Alexa. Tell me what ingredients you have and I will tell you what you can make with them. ';
+    const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello ', speechText)
+      .withSimpleCard('Hello World', speechText)
       .getResponse();
   }
 };
 
-const HelloIntentHandler = {
+const HelloWorldIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'HelloIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
   },
   handle(handlerInput) {
-    const speechText = 'Hello are you ready to cook? Tell me what ingredients you have on hand!';
+    const speechText = 'Hello World!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hello ', speechText)
+      .withSimpleCard('Hello World', speechText)
       .getResponse();
   }
 };
@@ -36,44 +36,28 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'As a Chef you can tell me what ingredients you have on hand and I will tell you what you can make!';
+    const speechText = 'You can say hello to me!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('As a Chef you can tell me what ingredients you have on hand and I will tell you what you can make!', speechText)
+      .withSimpleCard('Hello World', speechText)
       .getResponse();
   }
-};
-
-
-const FallbackIntentHandler = {
-  canHandle() {
-    return true;
-  },
-  handle(handlerInput, error) {
-    console.log(`Error handled: ${error.message}`);
-
-    return handlerInput.responseBuilder
-      .speak('Fallback')
-      .reprompt('Fallback')
-      .getResponse();
-  },
 };
 
 const CancelAndStopIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent'
-        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NavigateHomeIntent');
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
   },
   handle(handlerInput) {
-    const speechText = 'Hope you enjoyed you meal and if you did not I am always here.';
+    const speechText = 'Goodbye!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hope you enjoyed you meal and if you did not I am always here.', speechText)
+      .withSimpleCard('Hello World', speechText)
       .getResponse();
   }
 };
@@ -110,9 +94,8 @@ exports.handler = async function (event, context) {
     skill = Alexa.SkillBuilders.custom()
       .addRequestHandlers(
         LaunchRequestHandler,
-        HelloIntentHandler,
+        HelloWorldIntentHandler,
         HelpIntentHandler,
-        FallbackIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
       )
@@ -129,10 +112,9 @@ exports.handler = async function (event, context) {
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
-    HelloIntentHandler,
+    HelloWorldIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    FallbackIntentHandler,
     SessionEndedRequestHandler)
   .addErrorHandlers(ErrorHandler)
   .lambda();
