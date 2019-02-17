@@ -10,7 +10,7 @@ app.use(express.static('./frontend/web/views'))
 app.get('/test', (req, res) => {
 	res.json({ hello: 'world' }
 	)
-})d
+})
 let recipes = undefined
 app.get('/status', (req, res) => {
 	res.json({ hasRecipe: recipes != undefined })
