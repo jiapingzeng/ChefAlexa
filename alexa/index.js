@@ -1,23 +1,16 @@
 'use strict';
 const Alexa = require('alexa-sdk');
 const request = require('sync-request')
-var random = require('math-random')
 
-const appId = 'a593916b'
-const appKey = '5e107e6eccb15211d97ac9cc54c287de'
-const appUri = 'https://api.edamam.com/search'
+const appUri = 'https://chefalexa.herokuapp.com/recipe'
 
 var getRecipe = (keywords) => {
   var res = request('GET', appUri, {
     qs: {
-      app_id: appId,
-      app_key: appKey,
-      q: keywords,
-      to: 10
+      ingredients: keywords,
     }
   })
-  var body = JSON.parse(res.getBody())
-  var recipes = body.hits
+  var recipes = res.getBody().hits
   return recipes
 }
 
@@ -25,13 +18,11 @@ const handlers = {
   'LaunchRequest': function () {
     const responseText = 'Hello I am Chef Alexa! Tell me what ingredients you have on hand and I will tell you what you can make with them!'
     this.response.speak(responseText);
-    this.response.cardRenderer('Chef Alexa: Welcome!', responseText);
     this.emit(':responseReady')
   },
   'AMAZON.HelpIntent': function () {
     const responseText = 'Hello I am Chef Alexa! Tell me what ingredients you have on hand and I will tell you what you can make with them!'
     this.response.speak(responseText);
-    this.response.cardRenderer('Chef Alexa: Welcome!', responseText);
     this.emit(':responseReady')
   },
   'AMAZON.CancelIntent': function () {
@@ -49,7 +40,7 @@ const handlers = {
     const recipe = getRecipe(FoodA)[0].recipe
     var ingredients = recipe.ingredientLines[0] + ', ' + recipe.ingredientLines[1]
     this.response.speak(`Would you like to try ${recipe.label}? It requires ${ingredients} and more. For more information on this recipe and other checkout the Chef Alexa webapp on your phone.`)
-    this.response.cardRenderer(`Chef Alexa: ${recipe.label}`, `Would you like to try ${recipe.label}?`);
+    this.response.cardRenderer(`Chef Alexa: ${recipe.label}`, `${recipe.label}?`);
 
     this.emit(':responseReady')
   },
@@ -60,13 +51,11 @@ const handlers = {
   'AMAZON.FallbackIntent': function () {
     const responseText = 'I am sorry, but I do not understand what you are trying to say. Can you please rephrase your query?'
     this.response.speak(responseText);
-    this.response.cardRenderer("Chef Alexa: I don't understand", responseText);
     this.emit(':responseReady')
   },
   'whoIsTheChefIntent': function () {
     var responseText = 'The chef is you, Alexa, and the internet. The chef can find any recipe with any ingredients.'
     this.response.speak(responseText);
-    this.response.cardRenderer('Chef Alexa: The Chef Is: ' + responseText);
     this.emit(':responseReady')
   }
 };
