@@ -12,7 +12,7 @@ app.get('/test', (req, res) => {
 	)
 })
 app.get('/splash', (req, res) => {
-	res.json('splash.html')
+	res.send('splash.html')
 
 })
 let recipes = undefined
