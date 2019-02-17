@@ -60,9 +60,12 @@ const handlers = {
     var responseText = 'The chef is you, Alexa, and the internet. The chef can find any recipe with any ingredients.'
     this.response.speak(responseText);
     this.emit(':responseReady')
+  },
+  fireAlarmIntent: function () {
+    this.response.speak("<audio src='https://www.jovo.tech/audio/PFUDNNOp-pound-the-alarm.mp3'/>")
+    this.emit(':responseReady')
   }
 };
-
 exports.handler = function (event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
   alexa.registerHandlers(handlers);
