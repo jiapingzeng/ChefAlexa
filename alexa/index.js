@@ -17,13 +17,14 @@ const handlers = {
     this.emit(':responseReady');
   },
   'AMAZON.StopIntent': function () {
-    this.response.speak('STOP_MESSAGE');
-    this.emit(':responseReady');
+    const responseText = 'I hope you enjoyed your food! And remember that I am always available to help you with your food cooking needs!'
+    this.response.speak(responseText);
+    this.emit(':responseReady')
   },
   'AMAZON.FallbackIntent': function () {
-    const responseText = 'I am sorry but I do not understand what you are trying to say. Can you please rephrase your quary?'
+    const responseText = 'I am sorry, but I do not understand what you are trying to say. Can you please rephrase your quary?'
     this.response.speak(responseText);
-    this.response.cardRenderer("Chef Alexa: I don't unserstand", responseText);
+    this.response.cardRenderer("Chef Alexa: I don't understand", responseText);
     this.emit(':responseReady')
   }
 };
