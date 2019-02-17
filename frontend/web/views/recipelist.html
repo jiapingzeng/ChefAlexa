@@ -70,7 +70,10 @@
                 console.log(a)
                 a = JSON.parse(a)
                 document.querySelector('#bg').style.backgroundImage = `url(${a.image})`
-                document.querySelector('h1').innerHTML = a.label
+                if(a.label){
+                    document.querySelector('h1').innerHTML = a.label
+                    document.title = a.label
+                }
                 link = a.url
             })
 
