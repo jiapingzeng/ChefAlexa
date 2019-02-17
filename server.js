@@ -21,13 +21,23 @@ app.get('/splash', (req, res) => {
 	}
 
 })
-app.get('/recipe-list', (req, res) => {
+let recipes = undefined
+app.get('/status', (req, res) => {
+	res.json({ hasRecipe: recipes != undefined })
+})
+
+// gets and caches a recipe from edamam
+app.get('/recipe', (req, res) => {
 	console.log(JSON.parse(req.query.ingredients))
 	let query = new URL('https://api.edamam.com/search?app_id=a593916b&app_key=5e107e6eccb15211d97ac9cc54c287de')
 	query.searchParams.append('q', JSON.parse(req.query.ingredients).join('+'))
-	query.searchParams.append('ingr', JSON.parse(req.query.ingredients).length)
-	fetch(query).then((r) => res.json({ "hits": r })
-	).catch(() => res.status(500).send())
+	fetch(query).then(
+		r => r.json()
+	).then(e => { res.json(e.hits); recipes = e.hits }).catch(() => res.status(500).send())
+})
+app.get('/clear', (req, res) => { recipes = undefined; res.json({ success: true }) })
+app.get('/recipe-list', (req, res) => {
+	res.json(recipes)
 })
 app.listen(process.env.PORT || 3000, function () {
 	console.log(`Now listening on ${process.env.PORT || 3000}`)

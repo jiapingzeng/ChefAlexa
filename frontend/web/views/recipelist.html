@@ -5,7 +5,8 @@
     <title>Recipe List</title>
     <link href="./styles.css" rel="stylesheet">
   </head>
-  <body>
+  <body style = text-align:center>
+    <div>
     <h1>
         Recipes You Can Make
     </h1>
@@ -22,9 +23,13 @@
                 hits = data
                 var str = ' ';
                 hits.forEach(function(list) {
-                str += `<li><a href= ${list.recipe.url}><img src=${list.recipe.image}> ${list.recipe.label}</a></li>`;
+                str += `<li><a href= ${list.recipe.url} onClick = post(e)>${list.recipe.label}
+                    <img src=${list.recipe.image} height = 10% width = 10%> </a></li>`;
                 }); 
                 document.getElementById('list').innerHTML = str;
+                function post(e){
+                    fetch('/clear')
+                }
             }
         ).catch(
             function(error){
@@ -33,6 +38,6 @@
 
         
     </script>
-    
+    </div>
   </body>
 </html>
