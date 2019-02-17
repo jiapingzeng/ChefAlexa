@@ -38,10 +38,10 @@ app.get('/recipe', (req, res) => {
 		r => r.json()
 	).then(e => { 
 		recipes = e.hits; 
-		// console.log(e.hits); 
+		console.log(e.hits); 
 		res.json(e.hits); 
 	}).catch((err) => {
-		// console.log(err);
+		console.log(err);
 		res.status(500).send()})
 })
 app.get('/clear', (req, res) => { recipes = undefined; res.json({ success: true }) })
