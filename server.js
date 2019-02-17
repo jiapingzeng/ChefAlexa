@@ -4,9 +4,9 @@ const fetch = require("node-fetch")
 const fs = require('fs')
 const path = require('path')
 const example = require('./example.json')
-var URL = require('url').URL
+const URL = require('url').URL
 app.use(express.json())
-app.use(express.static('./views'))
+app.use(express.static('./frontend/web/views'))
 
 app.get('/test', (req, res) => {
         res.json({ hello: 'world' }
