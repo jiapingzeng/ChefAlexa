@@ -9,12 +9,15 @@ const handlers = {
     this.emit(':responseReady')
   },
   'AMAZON.HelpIntent': function () {
-    this.response.speak('speechOutput').listen('reprompt');
-    this.emit(':responseReady');
+    const responseText = 'Hello I am Chef Alexa! Tell me what ingredients you have on hand and I will tell you what you can make with them!'
+    this.response.speak(responseText);
+    this.response.cardRenderer('Chef Alexa: Welcome!', responseText);
+    this.emit(':responseReady')
   },
   'AMAZON.CancelIntent': function () {
-    this.response.speak('STOP_MESSAGE');
-    this.emit(':responseReady');
+    const responseText = 'I hope you enjoyed your food! And remember that I am always available to help you with your food cooking needs!'
+    this.response.speak(responseText);
+    this.emit(':responseReady')
   },
   'AMAZON.StopIntent': function () {
     const responseText = 'I hope you enjoyed your food! And remember that I am always available to help you with your food cooking needs!'
