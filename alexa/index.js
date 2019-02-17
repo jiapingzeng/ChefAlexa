@@ -39,6 +39,12 @@ const handlers = {
   'easterEggIntent' : function() {
     this.response.speak("RUN <audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_02'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/>")
     this.emit(':responseReady')
+  },
+  'whoIsTheChefIntent' : function () {
+    var responseText = 'The chef is you, Alexa, and the internet. The chef can find any recipe with any ingredients.'
+    this.response.speak(responseText);
+    this.response.cardRenderer('Chef Alexa: The Chef Is: ' + responseText);
+    this.emit(':responseReady')
   }
 };
 
