@@ -10,8 +10,7 @@ var getRecipe = (keywords) => {
       ingredients: keywords,
     }
   })
-  var body = JSON.parse(res.getBody())
-  var recipes = body.hits
+  var recipes = res.getBody().hits
   return recipes
 }
 
