@@ -6,77 +6,119 @@
     <title>Recipe List</title>
     <link href="./styles.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="./img/Chef-Alexa.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
-      #bg {
-      width: 100%;
-      z-index: -1;
-      height: 100%;
-      background-image: url("./img/splashbg.jpeg");
-      background-repeat: no-repeat;
-      background-size: cover;
-      filter: brightness(0.2);
-      position: absolute;
-      line-height: 1.1rem
-    }
-    #yes, #no {
-        margin: 1rem;
-        padding: 1rem;
-        background: rgba(255,255,255,0.5);
-        border-radius: 8px;
-        box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.6);
-        cursor: pointer;
-    }
-    #yes:hover, #no:hover {
-        background: rgba(255,255,255,0.8);
+        #bg {
+            width: 100%;
+            z-index: -1;
+            height: 100%;
+            background-image: url("./img/splashbg.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: brightness(0.2);
+            position: absolute;
+            line-height: 1.1rem
+        }
 
-    }
+        #yes,
+        #no {
+            margin: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        #yes:hover,
+        #no:hover {
+            background: rgba(255, 255, 255, 0.8);
+
+        }
     </style>
 </head>
 
 <body style=text-align:center>
-        <div id="bg">
+    <div id="bg">
 
-            </div>
+    </div>
     <div style="padding: 1rem; max-width: 666px; margin: 0 auto; height: 100%">
         <div style="font-family: 'Libre Baskerville', serif; opacity: 0.8">
             View recipe
         </div>
-        <h1 style="font-size: 2rem; line-height: 3rem">
+        <h1 style="font-size: 24px; line-height: 3rem">
             Recipe not found :(
         </h1>
     </div>
 
-        <div style="position: relative; bottom: 12rem; width: 100%; margin: 0 auto; max-width: 800px; left: 0; right: 0">
-            <div id="yes" onclick="yes()">Yes</div>
-            <div id="no" onclick="no()">No</div>
-        </div>
-        <script>
-            let link = ''
-            function clear(){
-                return fetch('/clear')
-            }
-            function yes(){
-                if(link)
-                    window.location.href = link
-                clear()
-            }
-            function no(){
-                clear().then(function(){
-                    window.location.href = './splash.html'
-                })
-            }
-            fetch('./recipe-list')
-            .then(e=>e.text())
-            .then(a=>{
+    <div style="position: relative; bottom: 12rem; width: 100%; margin: 0 auto; max-width: 800px; left: 0; right: 0">
+        <div id="yes" onclick="yes()">Yes</div>
+        <div id="no" onclick="no()">No</div>
+    </div>
+    <script>
+        let link = ''
+        function titleCase(str) {
+            // Step 1. Lowercase the string
+            str = str.toLowerCase() // str = "i'm a little tea pot";
+
+                // Step 2. Split the string into an array of strings
+                .split(' ') // str = ["i'm", "a", "little", "tea", "pot"];
+
+                // Step 3. Map over the array
+                .map(function (word) {
+                    return word.replace(word[0], word[0].toUpperCase());
+                    /* Map process
+                    1st word: "i'm" => word.replace(word[0], word[0].toUpperCase());
+                                       "i'm".replace("i", "I");
+                                       return word => "I'm"
+                    2nd word: "a" => word.replace(word[0], word[0].toUpperCase());
+                                     "a".replace("a", "A");
+                                      return word => "A"
+                    3rd word: "little" => word.replace(word[0], word[0].toUpperCase());
+                                          "little".replace("l", "L");
+                                          return word => "Little"
+                    4th word: "tea" => word.replace(word[0], word[0].toUpperCase());
+                                       "tea".replace("t", "T");
+                                       return word => "Tea"
+                    5th word: "pot" => word.replace(word[0], word[0].toUpperCase());
+                                       "pot".replace("p", "P");
+                                       return word => "Pot"                                                        
+                    End of the map() method */
+                });
+
+            // Step 4. Return the output
+            return str.join(' '); // ["I'm", "A", "Little", "Tea", "Pot"].join(' ') => "I'm A Little Tea Pot"
+        }
+        function clear() {
+            return fetch('/clear')
+        }
+        function yes() {
+            if (link)
+                window.location.href = link
+            clear()
+        }
+        function no() {
+            clear().then(function () {
+                window.location.href = './splash.html'
+            })
+        }
+        fetch('./recipe-list')
+            .then(e => e.text())
+            .then(a => {
                 console.log(a)
                 a = JSON.parse(a)
                 document.querySelector('#bg').style.backgroundImage = `url(${a.image})`
-                document.querySelector('h1').innerHTML = a.label
+                if (a.label) {
+                    a.label = a.label.split(' recipes')[0].split(' Recipes')[0]
+                    document.querySelector('h1').innerHTML = a.label
+                    document.title = a.label
+                }
                 link = a.url
             })
 
 
-        </script>
+    </script>
 </body>
 
 </html>

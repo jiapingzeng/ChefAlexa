@@ -37,11 +37,14 @@ const handlers = {
   },
   'RecipeIntent': function () {
     var FoodA = this.event.request.intent.slots.foodA.value;
-    const recipe = getRecipe(FoodA)
-    var ingredients = recipe.ingredientLines[0] + ', ' + recipe.ingredientLines[1]
-    this.response.speak(`Would you like to try ${recipe.label}? It requires ${ingredients} and more. For more information on this recipe and others checkout the Chef Alexa webapp on your phone.`)
-    this.response.cardRenderer(`Chef Alexa: ${recipe.label}`, `${recipe.label}`);
-
+    try {
+      const recipe = getRecipe(FoodA)
+      var ingredients = recipe.ingredientLines[0] + ', ' + recipe.ingredientLines[1]
+      this.response.speak(`Would you like to try ${recipe.label}? It requires ${ingredients} and more. For more information on this recipe and others checkout the Chef Alexa webapp on your phone.`)
+      this.response.cardRenderer(`Chef Alexa: ${recipe.label}`, `${recipe.label}`);
+    } catch (error) {
+      this.response.speak(`I am sorry but no recipes with ${FoodA} were found`)
+    }
     this.emit(':responseReady')
   },
   'easterEggIntent': function () {
