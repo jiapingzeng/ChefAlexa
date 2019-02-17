@@ -3,7 +3,6 @@ const app = express()
 const fetch = require("node-fetch")
 const fs = require('fs')
 const path = require('path')
-const example = require('./example.json')
 var URL = require('url').URL
 app.use(express.json())
 app.use(express.static('./frontend/web/views'))
@@ -37,9 +36,9 @@ app.get('/recipe', (req, res) => {
 	fetch(query).then(
 		r => r.json()
 	).then(e => { 
-		recipes = e.hits; 
-		console.log(e.hits); 
-		res.json(e.hits); 
+		recipes = e.hits[Math.floor(Math.random() * e.hits.length)].recipe; 
+		console.log(recipes); 
+		res.json(recipes); 
 	}).catch((err) => {
 		console.log(err);
 		res.status(500).send()})
