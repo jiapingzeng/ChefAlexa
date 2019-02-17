@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Recipe List</title>
+    <link href="./styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>
+        Recipes You Can Make
+    </h1>
+    <div id = 'list' style="list-style-type:none;"></div>
+    <script>
+        var hits;
+        fetch('http://localhost:3000/idk')
+        .then(
+            function(a){
+                return a.json()
+            }
+        ).then(
+            function(data){
+                hits = data
+                var str = ' ';
+                hits.forEach(function(list) {
+                str += `<li><a href= ${list.recipe.url}><img src=${list.recipe.image}> ${list.recipe.label}</a></li>`;
+                }); 
+                document.getElementById('list').innerHTML = str;
+            }
+        ).catch(
+            function(error){
+                console.log(error)
+        });
+
+        
+    </script>
+    
+  </body>
+</html>
