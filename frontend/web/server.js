@@ -12,11 +12,11 @@ app.get('/test', (req, res) => {
 	res.json({ hello: 'world' }
 	)
 })
-app.get('/idk', (req, res)=>{
+app.get('/idk', (req, res) => {
 	res.json(example.hits)
 })
 app.get('/recipe-list', (req, res) => {
-	console.log(JSON.parse (req.query.ingredients))
+	console.log(JSON.parse(req.query.ingredients))
 	let query = new URL('https://api.edamam.com/search?app_id=a593916b&app_key=5e107e6eccb15211d97ac9cc54c287de')
 	query.searchParams.append('q', JSON.parse(req.query.ingredients).join('+'))
 	query.searchParams.append('ingr', JSON.parse(req.query.ingredients).length)
