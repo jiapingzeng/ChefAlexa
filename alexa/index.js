@@ -97,7 +97,7 @@ exports.handler = async function (event, context) {
         HelloWorldIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
-        SessionEndedRequestHandler,
+        SessionEndedRequestHandler
       )
       .addErrorHandlers(ErrorHandler)
       .create();
@@ -107,7 +107,7 @@ exports.handler = async function (event, context) {
   console.log(`RESPONSE++++${JSON.stringify(response)}`);
 
   return response;
-};
+}
 
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
