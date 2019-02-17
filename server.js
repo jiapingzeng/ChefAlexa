@@ -1,32 +1,12 @@
-const https = require('https')
-const port = 3139
-const server = https.createServer(requestHandler)
-const Alexa = require('ask-sdk-core');
- 
-let skill;
+const Alexa = require('ask-sdk-v1adapter');
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+      return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = 'Hello, I am your personal assistant PageBot please let me send your location to Amazon before we begin.';
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard('Location Sent.', speechText)
-            .getResponse();
-    }
-};
-
-const HelpIntentHandler = {
-    canHandle(handlerInput) {
-      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-        && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
-    },
-    handle(handlerInput) {
-      const speechText = 'You can ask me what you can make if you have certain ingredients';
+      const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
+  
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)
@@ -35,39 +15,106 @@ const HelpIntentHandler = {
     }
   };
 
-const ErrorHandler = {
+  const HelloWorldIntentHandler = {
+    canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+    },
+    handle(handlerInput) {
+      const speechText = 'Hello World!';
+  
+      return handlerInput.responseBuilder
+        .speak(speechText)
+        .withSimpleCard('Hello World', speechText)
+        .getResponse();
+    }
+  };
+
+  const HelpIntentHandler = {
+    canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+    },
+    handle(handlerInput) {
+      const speechText = 'You can say hello to me!';
+  
+      return handlerInput.responseBuilder
+        .speak(speechText)
+        .reprompt(speechText)
+        .withSimpleCard('Hello World', speechText)
+        .getResponse();
+    }
+  };
+
+  const CancelAndStopIntentHandler = {
+    canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
+          || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
+    },
+    handle(handlerInput) {
+      const speechText = 'Goodbye!';
+  
+      return handlerInput.responseBuilder
+        .speak(speechText)
+        .withSimpleCard('Hello World', speechText)
+        .getResponse();
+    }
+  };
+
+  const SessionEndedRequestHandler = {
+    canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+    },
+    handle(handlerInput) {
+      //any cleanup logic goes here
+      return handlerInput.responseBuilder.getResponse();
+    }
+  };
+
+  const ErrorHandler = {
     canHandle() {
-        return true;
+      return true;
     },
     handle(handlerInput, error) {
-        console.log(`Error handled: ${error.message}`);
-
-        return handlerInput.responseBuilder
-            .speak('Sorry, I can\'t understand what it is your are trying to say. Can you please restate?')
-            .reprompt('Sorry, I can\'t understand what it is your are trying to say. Can you please restate?')
-            .getResponse();
+      console.log(`Error handled: ${error.message}`);
+  
+      return handlerInput.responseBuilder
+        .speak('Sorry, I can\'t understand the command. Please say again.')
+        .reprompt('Sorry, I can\'t understand the command. Please say again.')
+        .getResponse();
     },
-};
+  };
+
+  let skill;
 
 exports.handler = async function (event, context) {
-    if (!skill) {
-        skill = Alexa.SkillBuilders.custom()
-            .addRequestHandlers(
-                LaunchRequestHandler,
-                HelpIntentHandler,
-                CancelAndStopIntentHandler,
-                SessionEndedRequestHandler,
-            )
-            .addErrorHandlers(ErrorHandler)
-            .create();
-    }
+  console.log(`REQUEST++++${JSON.stringify(event)}`);
+  if (!skill) {
+    skill = Alexa.SkillBuilders.custom()
+      .addRequestHandlers(
+        LaunchRequestHandler,
+        HelloWorldIntentHandler,
+        HelpIntentHandler,
+        CancelAndStopIntentHandler,
+        SessionEndedRequestHandler,
+      )
+      .addErrorHandlers(ErrorHandler)
+      .create();
+  }
 
-    const response = await skill.invoke(event, context);
-    return response;
+  const response = await skill.invoke(event, context);
+  console.log(`RESPONSE++++${JSON.stringify(response)}`);
+
+  return response;
 };
 
-server.listen(port, (err) => {
-    if (err) {
-        return console.log('You have a error: ', err)
-    }
-})
+exports.handler = Alexa.SkillBuilders.custom()
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    HelloWorldIntentHandler,
+    HelpIntentHandler,
+    CancelAndStopIntentHandler,
+    SessionEndedRequestHandler)
+  .addErrorHandlers(ErrorHandler)
+  .lambda();
