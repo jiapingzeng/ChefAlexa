@@ -1,27 +1,6 @@
 'use strict';
 const Alexa = require('alexa-sdk');
 
-//JP Recipe Stuff
-const appId = 'a593916b'
-const appKey = '5e107e6eccb15211d97ac9cc54c287de'
-const appUri = 'https://api.edamam.com/search'
-
-function getRecipe (keywords) {
-  
-  var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", 'https://chefalexa.herokuapp.com/recipe?ingredinents?' + keywords.split(' '), true ); // false for synchronous request
-    xmlHttp.send(null);
-    return JSON.parse(xhr.responseText)[0];
-}
-
-function getIngredients (r) {
-  var ingredients = ""
-  for (i = 0; i < 5 && i < r.ingredientLines.length; i++) {
-    ingredients += r.ingredientLines[i] + ", "
-  }
-  return ingredients
-}
-
 const handlers = {
   'LaunchRequest': function () {
     const responseText = 'Hello I am Chef Alexa! Tell me what ingredients you have on hand and I will tell you what you can make with them!'
@@ -46,16 +25,9 @@ const handlers = {
     this.emit(':responseReady')
   },
   'AMAZON.FallbackIntent': function () {
-    const responseText = 'I am sorry, but I do not understand what you are trying to say. Can you please rephrase your query?'
+    const responseText = 'I am sorry, but I do not understand what you are trying to say. Can you please rephrase your quary?'
     this.response.speak(responseText);
-    this.emit(':responseReady')
-  },
-  'RecipeIntent': function (input) {
-    var foodList = this.event.request.intent.slots.foodA.value;
-    const recipe = getRecipe(foodList)
-    const ingredients = getIngredients(recipe)
-    this.response.speak(`Would you like to try` + recipe.label + '?' `Here are the ingredients you need:` + ingredients);
-    this.response.cardRenderer(`Chef Alexa: ${recipe.label} `, foodList);
+    this.response.cardRenderer("Chef Alexa: I don't understand", responseText);
     this.emit(':responseReady')
   },
   'easterEggIntent': function () {
