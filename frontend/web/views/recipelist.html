@@ -23,8 +23,8 @@
                 hits = data
                 var str = ' ';
                 hits.forEach(function(list) {
-                str += `<li><a href= ${list.recipe.url} onClick = post(e)><img src=${list.recipe.image}> ${list.recipe.label}<br/> 
-                    </a></li>`;
+                str += `<li><a href= ${list.recipe.url} onClick = post(e)>${list.recipe.label}
+                    <img src=${list.recipe.image} height = 10% width = 10%> </a></li>`;
                 }); 
                 document.getElementById('list').innerHTML = str;
                 function post(e){
