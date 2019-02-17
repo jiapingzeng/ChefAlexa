@@ -35,6 +35,10 @@ const handlers = {
     this.response.speak('You have' + foodList);
     this.response.cardRenderer('Chef Alexa: You Have: ' + foodList);
     this.emit(':responseReady')
+  },
+  'easterEggIntent' : function() {
+    this.response.speak("<audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_02'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/><audio src='soundbank://soundlibrary/scifi/amzn_sfx_scifi_alarm_03'/>")
+    this.emit(':responseReady')
   }
 };
 
