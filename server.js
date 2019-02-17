@@ -36,7 +36,13 @@ app.get('/recipe', (req, res) => {
 	query.searchParams.append('q', (req.query.ingredients).split(' ').join('+'))
 	fetch(query).then(
 		r => r.json()
-	).then(e => { res.json(e.hits); recipes = e.hits }).catch(() => res.status(500).send())
+	).then(e => { 
+		recipes = e.hits; 
+		// console.log(e.hits); 
+		res.json(e.hits); 
+	}).catch((err) => {
+		// console.log(err);
+		res.status(500).send()})
 })
 app.get('/clear', (req, res) => { recipes = undefined; res.json({ success: true }) })
 app.get('/recipe-list', (req, res) => {
