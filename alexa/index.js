@@ -21,15 +21,6 @@ var getRecipe = (keywords) => {
   return recipes
 }
 
-var getIngredients = (r) => {
-  var ingredients = ""
-  for (i = 0; i < 5 && i < r.ingredientLines.length; i++) {
-    ingredients += r.ingredientLines[i].text + ", "
-  }
-  return ingredients
-}
-
-
 const handlers = {
   'LaunchRequest': function () {
     const responseText = 'Hello I am Chef Alexa! Tell me what ingredients you have on hand and I will tell you what you can make with them!'
