@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>Welcome to the Alexa food skill!</title>
+  <link href="./styles.css" rel="stylesheet">
+  <style>
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      overflow-y: hidden;
+      padding: 0;
+      margin: 0;
+      color: #FAFAFA;
+      text-align: center;
+    }
+
+    #bg {
+      width: 100%;
+      z-index: -1;
+      height: 100%;
+      background-image: url("./img/splashbg.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      filter: brightness(0.2);
+      position: absolute;
+    }
+
+    h1 {
+      font-style: italic;
+      font-size: 3rem;
+      font-weight: normal
+    }
+
+    #main {
+      margin: 1rem;
+      display: flow;
+    }
+
+    quote {
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      color: #222;
+      margin: 1.5rem;
+      display: inline-block;
+      width: auto;
+      border-radius: 8px;
+      line-height: 1.5rem;
+      border-color: transparent;
+      position: relative;
+      border: none;
+    }
+
+    quote :after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 0.77em solid transparent;
+      border-right-color: rgba(255, 255, 255, 0.8);
+      border-left: 0;
+      border-top: 0;
+      margin-top: -0.375em;
+      margin-left: -0.75em;
+    }
+
+    .short-quote {
+      width: 3rem;
+    }
+
+    .transparent {
+      opacity: 0;
+    }
+
+    .not-transparent {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="bg">
+
+  </div>
+  <div id="main">
+    <h1>
+      Chef Alexa
+    </h1>
+    <div style="margin: 1rem">
+      Get a recipe with your ingredients by saying
+    </div>
+    <quote>
+      Alexa, ask <span style="font-weight: bold; color: #528">the chef</span> what can I make with<br>
+      <span id="ingredients">a monkey and a turkey</span>
+    </quote>
+    <div style="position: absolute; bottom: 1.5rem; left: 0; right: 0; opacity: 0.8; font-size: 1rem">
+      Powered by <a href="https://www.edamam.com/" style="color: lightgreen">Edamam</a> and <a href="https://aws.amazon.com/" style="color:lightgreen">AWS</a>
+    </div>
+  </div>
+  <script>
+    // UI code
+    const ingredients = ['a monkey and a turkey', 'three eggs', 'a rack of ribs', 'avocados', `a list of stuff and more stuff`]
+    const ingredientsElem = document.querySelector('#ingredients')
+    let i = 0
+    function fadeIn() {
+      ingredientsElem.innerHTML = ingredients[i]
+      ingredientsElem.className = 'not-transparent'
+    }
+    function fadeOut() {
+      ingredientsElem.className = 'transparent'
+      if (i != ingredients.length - 1) return ++i
+      i = 0 
+    }
+    setInterval(
+      function () {
+        fadeIn()
+        setTimeout(fadeOut, 2500)
+      }
+      , 3000)
+  </script>
+</body>
+
+</html>
