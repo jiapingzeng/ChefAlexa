@@ -13,7 +13,7 @@ app.get('/test', (req, res) => {
 })
 app.get('/splash', (req, res) => {
 	if (req.secure) {
-		res.json(splash.html)
+		res.send(splash.html)
 	} else {
 		// request was via http, so redirect to https
 		res.redirect('https://' + req.headers.host + req.url);
